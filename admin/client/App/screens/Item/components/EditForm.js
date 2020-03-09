@@ -122,7 +122,14 @@ var EditForm = React.createClass({
 			confirmationDialog: null,
 		});
 	},
+	showScan () {
+		const { data } = this.props;
+		console.log('data', data);
+		window.open(data.fields.GDriveLink, '_blank');
+	},
+
 	updateItem () {
+		console.log('update func');
 		const { data, list } = this.props;
 		const editForm = this.refs.editForm;
 		const formData = new FormData(editForm);
@@ -275,12 +282,25 @@ var EditForm = React.createClass({
 					>
 						{loadingButtonText}
 					</LoadingButton>
+					&nbsp;&nbsp;&nbsp;
+					<LoadingButton
+						color="primary"
+						disabled={loading}
+						loading={loading}
+						onClick={this.showScan}
+					>
+						Scan
+					</LoadingButton>
+
+
+
 					<Button disabled={loading} onClick={this.toggleResetDialog} variant="link" color="cancel" data-button="reset">
 						<ResponsiveText
 							hiddenXS="reset changes"
 							visibleXS="reset"
 						/>
 					</Button>
+
 					{!this.props.list.nodelete && (
 						<Button disabled={loading} onClick={this.toggleDeleteDialog} variant="link" color="delete" style={styles.deleteButton} data-button="delete">
 							<ResponsiveText
