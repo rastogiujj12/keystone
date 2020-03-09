@@ -123,9 +123,10 @@ var EditForm = React.createClass({
 		});
 	},
 	showScan () {
-		const { data } = this.props;
+		const { data, list } = this.props;
 		console.log('data', data);
-		window.open(data.fields.GDriveLink, '_blank');
+		console.log(list);
+		// window.open(data.fields.GDriveLink, '_blank');
 	},
 
 	updateItem () {
@@ -269,7 +270,7 @@ var EditForm = React.createClass({
 
 		// Padding must be applied inline so the FooterBar can determine its
 		// innerHeight at runtime. Aphrodite's styling comes later...
-
+		// console.log('>>', this.props.list.label);
 		return (
 			<FooterBar style={styles.footerbar}>
 				<div style={styles.footerbarInner}>
@@ -283,16 +284,16 @@ var EditForm = React.createClass({
 						{loadingButtonText}
 					</LoadingButton>
 					&nbsp;&nbsp;&nbsp;
-					<LoadingButton
-						color="primary"
-						disabled={loading}
-						loading={loading}
-						onClick={this.showScan}
-					>
-						Scan
-					</LoadingButton>
-
-
+					{this.props.list.label !== 'Users' && (
+						<LoadingButton
+							color="primary"
+							disabled={loading}
+							loading={loading}
+							onClick={this.showScan}
+						>
+							Scan
+						</LoadingButton>
+					)}
 
 					<Button disabled={loading} onClick={this.toggleResetDialog} variant="link" color="cancel" data-button="reset">
 						<ResponsiveText
