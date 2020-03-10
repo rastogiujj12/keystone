@@ -124,19 +124,32 @@ export const EditFormHeader = React.createClass({
 		);
 	},
 	renderInfo () {
-		let statusText = this.props.data.fields.Status.toUpperCase();
-		let color = 'secondary';
-		switch (statusText){
-			case 'RENEWED': color = 'primary'; break;
-			case 'PENDING': color = 'success'; break;
-			case 'EXPIRED': color = 'danger'; break;
-			default: color = 'secondary';
+		let color = '';
+		let statusText = '';
+		if (this.props.data.fields.Status){
+			statusText = this.props.data.fields.Status.toUpperCase();
+			switch (statusText) {
+				case 'RENEWED':
+					color = 'primary';
+					break;
+				case 'PENDING':
+					color = 'success';
+					break;
+				case 'EXPIRED':
+					color = 'danger';
+					break;
+				default:
+					color = 'secondary';
+			}
 		}
 		return (
 			<ToolbarSection right>
-				<GlyphButton color={color}>
-					{statusText}
-				</GlyphButton>
+				{ statusText ?
+					<GlyphButton color={color}>
+						{statusText}
+					</GlyphButton>
+					: ''
+				}
 				&nbsp;&nbsp;&nbsp;
 				{this.renderCreateButton()}
 			</ToolbarSection>
