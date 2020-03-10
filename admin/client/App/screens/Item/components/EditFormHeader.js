@@ -8,7 +8,7 @@ import EditFormHeaderSearch from './EditFormHeaderSearch';
 import { Link } from 'react-router';
 
 import Drilldown from './Drilldown';
-import { GlyphButton, ResponsiveText } from '../../../elemental';
+import {GlyphButton, LoadingButton, ResponsiveText} from '../../../elemental';
 
 export const EditFormHeader = React.createClass({
 	displayName: 'EditFormHeader',
@@ -124,12 +124,25 @@ export const EditFormHeader = React.createClass({
 		);
 	},
 	renderInfo () {
+		let statusText = this.props.data.fields.Status.toUpperCase();
+		let color = 'secondary';
+		switch (statusText){
+			case 'RENEWED': color = 'primary'; break;
+			case 'PENDING': color = 'success'; break;
+			case 'EXPIRED': color = 'danger'; break;
+			default: color = 'secondary';
+		}
 		return (
 			<ToolbarSection right>
+				<GlyphButton color={color}>
+					{statusText}
+				</GlyphButton>
+				&nbsp;&nbsp;&nbsp;
 				{this.renderCreateButton()}
 			</ToolbarSection>
 		);
 	},
+
 	renderCreateButton () {
 		const { nocreate, autocreate, singular } = this.props.list;
 
@@ -141,6 +154,7 @@ export const EditFormHeader = React.createClass({
 		} else {
 			props.onClick = () => { this.toggleCreate(true); };
 		}
+		// console.log('props', this.props);
 		return (
 			<GlyphButton data-e2e-item-create-button="true" color="success" glyph="plus" position="left" {...props}>
 				<ResponsiveText hiddenXS={`New ${singular}`} visibleXS="Create" />
@@ -148,6 +162,7 @@ export const EditFormHeader = React.createClass({
 		);
 	},
 	render () {
+		// console.log('>>>>>>>', this.props.data.fields.Status);
 		return (
 			<Toolbar>
 				{this.renderDrilldown()}

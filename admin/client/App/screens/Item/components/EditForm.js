@@ -123,10 +123,10 @@ var EditForm = React.createClass({
 		});
 	},
 	showScan () {
-		const { data, list } = this.props;
-		console.log('data', data);
-		console.log(list);
-		// window.open(data.fields.GDriveLink, '_blank');
+		const { data } = this.props;
+		// console.log('data', data);
+		// console.log(list);
+		window.open(data.fields.GDriveLink, '_blank');
 	},
 
 	updateItem () {
@@ -233,7 +233,8 @@ var EditForm = React.createClass({
 	},
 	renderFormElements () {
 		var headings = 0;
-
+		// console.log('ui', this.props);
+		// console.log('Fields',Fields);
 		return this.props.list.uiElements.map((el, index) => {
 			// Don't render the name field if it is the header since it'll be rendered in BIG above
 			// the list. (see renderNameField method, this is the reverse check of the one it does)
