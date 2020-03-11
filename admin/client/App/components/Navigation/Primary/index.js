@@ -88,7 +88,6 @@ var PrimaryNavigation = React.createClass({
 	// Render the navigation
 	renderNavigation () {
 		if (!this.props.sections || !this.props.sections.length) return null;
-
 		return this.props.sections.map((section) => {
 			// Get the link and the class name
 			const href = section.lists[0].external ? section.lists[0].path : `${Keystone.adminPath}/${section.lists[0].path}`;
@@ -117,6 +116,15 @@ var PrimaryNavigation = React.createClass({
 					<ul className="app-nav app-nav--primary app-nav--left">
 						{this.renderBrand()}
 						{this.renderNavigation()}
+						<PrimaryNavItem
+							active={false}
+							key={99}
+							label="Upload File"
+							className={null}
+							href="/fileupload"
+						>
+						Upload File
+						</PrimaryNavItem>
 					</ul>
 					{this.renderFrontLink()}
 				</Container>

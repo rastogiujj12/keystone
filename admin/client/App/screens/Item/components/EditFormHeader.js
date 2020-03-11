@@ -8,7 +8,7 @@ import EditFormHeaderSearch from './EditFormHeaderSearch';
 import { Link } from 'react-router';
 
 import Drilldown from './Drilldown';
-import {GlyphButton, LoadingButton, ResponsiveText} from '../../../elemental';
+import { GlyphButton,  ResponsiveText } from '../../../elemental';
 
 export const EditFormHeader = React.createClass({
 	displayName: 'EditFormHeader',
@@ -43,6 +43,12 @@ export const EditFormHeader = React.createClass({
 				{this.renderDrilldownItems()}
 				{this.renderSearch()}
 			</ToolbarSection>
+		);
+	},
+	uploadFile () {
+		console.log('here');
+		return (
+			<input type="file" name="file"/>
 		);
 	},
 	renderDrilldownItems () {
