@@ -26,6 +26,7 @@ import InvalidFieldType from '../../../shared/InvalidFieldType';
 import { deleteItem } from '../actions';
 
 import { upcase } from '../../../../utils/string';
+const request = require('request');
 
 function getNameFromData (data) {
 	if (typeof data === 'object') {
@@ -60,6 +61,7 @@ var EditForm = React.createClass({
 			loading: false,
 			lastValues: null, // used for resetting
 			focusFirstField: !this.props.list.nameField && !this.props.list.nameFieldIsFormHeader,
+			baseUrl: 'http://localhost:3000',
 		};
 	},
 	componentDidMount () {
@@ -124,9 +126,18 @@ var EditForm = React.createClass({
 	},
 	showScan () {
 		const { data } = this.props;
-		// console.log('data', data);
+		console.log('data', data);
 		// console.log(list);
 		window.open(data.fields.GDriveLink, '_blank');
+	},
+	followUp () {
+		const { data } = this.props;
+		request.post(this.state.baseUrl + '/sendmail', { form: { email: data.fields.EmailAddress, mailType: '1' } }, function (err, httpResponse, body) { throw err; });
+	},
+
+	reFollowUp () {
+		const { data } = this.props;
+		request.post(this.state.baseUrl + '/sendmail', { form: { email: data.fields.EmailAddress, mailType: '2' } }, function (err, httpResponse, body) { throw err; });
 	},
 
 	updateItem () {
@@ -293,6 +304,27 @@ var EditForm = React.createClass({
 							onClick={this.showScan}
 						>
 							Scan
+						</LoadingButton>
+					)}
+					&nbsp;&nbsp;&nbsp;
+					{this.props.list.label === 'Records' && (
+						<LoadingButton
+							color="primary"
+							disabled={loading}
+							loading={loading}
+							onClick={this.followUp}
+						>
+							Follow Up
+						</LoadingButton>
+					)} &nbsp;&nbsp;&nbsp;
+					{this.props.list.label === 'Records' && (
+						<LoadingButton
+							color="primary"
+							disabled={loading}
+							loading={loading}
+							onClick={this.reFollowUp}
+						>
+							RE:Follow Up
 						</LoadingButton>
 					)}
 
