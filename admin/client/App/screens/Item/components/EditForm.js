@@ -131,25 +131,26 @@ var EditForm = React.createClass({
 		window.open(data.fields.GDriveLink, '_blank');
 	},
 	followUp () {
+		console.log('reFollowUp btn');
 		const { data } = this.props;
-		request.post(this.state.baseUrl + '/sendmail', { form: { data: data.fields, mailType: '3' } }, function (err, httpResponse, body) { throw err; });
-	},
-
-	reFollowUp () {
+		// request.post(this.state.baseUrl + '/sendmail', { form: { data: data.fields, mailType: '4' } }, function (err, httpResponse, body) { throw err; });
+		let url = this.state.baseUrl + '/sendmail';
 		(async () => {
-			const rawResponse = await fetch(data, {
+			const rawResponse = await fetch(url, {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ data: data.fields, mailType: '4' })
+				body: JSON.stringify({ data: data.fields, mailType: '3' }),
 			});
 			const response = await rawResponse.json();
 
 			console.log(response);
 		})();
+	},
 
+	reFollowUp () {
 		console.log('reFollowUp btn');
 		const { data } = this.props;
 		// request.post(this.state.baseUrl + '/sendmail', { form: { data: data.fields, mailType: '4' } }, function (err, httpResponse, body) { throw err; });
