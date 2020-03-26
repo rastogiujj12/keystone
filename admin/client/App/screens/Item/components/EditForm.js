@@ -132,12 +132,84 @@ var EditForm = React.createClass({
 	},
 	followUp () {
 		const { data } = this.props;
-		request.post(this.state.baseUrl + '/sendmail', { form: { email: data.fields.EmailAddress, mailType: '1' } }, function (err, httpResponse, body) { throw err; });
+		request.post(this.state.baseUrl + '/sendmail', { form: { data: data.fields, mailType: '3' } }, function (err, httpResponse, body) { throw err; });
 	},
 
 	reFollowUp () {
+		(async () => {
+			const rawResponse = await fetch(data, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ data: data.fields, mailType: '4' })
+			});
+			const response = await rawResponse.json();
+
+			console.log(response);
+		})();
+
+		console.log('reFollowUp btn');
 		const { data } = this.props;
-		request.post(this.state.baseUrl + '/sendmail', { form: { email: data.fields.EmailAddress, mailType: '2' } }, function (err, httpResponse, body) { throw err; });
+		// request.post(this.state.baseUrl + '/sendmail', { form: { data: data.fields, mailType: '4' } }, function (err, httpResponse, body) { throw err; });
+		let url = this.state.baseUrl + '/sendmail';
+		(async () => {
+			const rawResponse = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ data: data.fields, mailType: '4' }),
+			});
+			const response = await rawResponse.json();
+
+			console.log(response);
+		})();
+		// const requestOptions = {
+		// 	method: 'POST',
+		// 	body: JSON.stringify({ data: data.fields, mailType: '4' }),
+		// 	// body: JSON.stringify({test: 123}),
+		// };
+		// this.setState({
+		// 	loading: true,
+		// });
+		// fetch(url, requestOptions)
+		// 	.then(response => response.json())
+		// 	.then(
+		// 		(result) => {
+		// 			console.log('result', result);
+		// 			this.setState({
+		// 				alerts: {
+		// 					success: {
+		// 						success: 'Mail has been successfully sent',
+		// 					},
+		// 				},
+		// 				loading: false,
+		// 			});
+		// 			// console.log('data', this.state.data);
+		// 		},
+		//
+		// 		// Note: it's important to handle errors here
+		// 		// instead of a catch() block so that we don't swallow
+		// 		// exceptions from actual bugs in components.
+		// 		(error) => {
+		// 			// TODO handle error
+		// 			// alert('error');
+		// 			// console.log('error ', error);
+		// 			this.setState({
+		// 				alerts: {
+		// 					error: {
+		// 						error: 'cannot sent the mail, please refresh the page and try again. If the issue still persists, contact the administrator',
+		// 						}
+		// 					},
+		// 				},
+		// 				loading: false,
+		// 				error: true,
+		// 			});
+		// 		}
+		// 	)
 	},
 
 	updateItem () {
